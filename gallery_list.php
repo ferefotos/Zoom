@@ -40,7 +40,6 @@ if(isset($_POST['limit'], $_POST['start'])){
                 ORDER BY file DESC LIMIT ".$_POST['start'] . ", " . $_POST['limit']."";
     }
     // Felhasználó szerinti szűrés
-   // $userid="";
     if ($_POST['userid'] != null){
         $url_param="userid={$_POST['userid']}&list=userid";
         $sql = "SELECT file, class, nev, pkep, userid FROM foto

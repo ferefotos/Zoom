@@ -60,8 +60,8 @@ if(!isset($_SESSION['userid']) || $_SESSION['userid']!=$sor['userid'])
                     <option value="<?php echo $kategoria['id'] ?>"><?php echo $kategoria['kategoria'] ?></option>    
                     <?php endif ?>   
                 <?php endwhile ?>
-                </select></p> 
-                <label><input type="checkbox" name="public" id="public_mod" value="" <?php if (!$sor['public']) echo "checked" ?>> Nem publikus</label>
+                </select><br> 
+                <label>Publikus?<input type="checkbox" name="public" id="public_mod" onclick="igenNem(this)"<?php if ($sor['public']) echo "checked" ?>><span><?php echo ($sor['public'])? "Igen" :"Nem"?></span></label>
             </div>
             <div id="exif">
                 <div class="exif">
@@ -126,9 +126,9 @@ if (isset($_POST['ment'])) {
     $leiras = tisztit($_POST['leiras']);
     $kategoria = $_POST['kategoria'];
     if (isset($_POST['public'])) {
-        $public = 0;
-    } else {
         $public = 1;
+    } else {
+        $public = 0;
     }
     $sql = "UPDATE foto SET katid=$kategoria, cim='$cim', 
          story='$leiras', public=$public 

@@ -16,6 +16,7 @@ if(isset($_SESSION['userid'])){
 <fieldset id="reg" class="reg" name="regisztracio">
     <legend>Regisztráció</legend>
     <form id="regform" enctype="multipart/form-data" action="#">   
+        <input type="hidden" name=admin value=<?php if(isset($sor['admin'])) echo $sor['admin'] ?>>
             <div id="reg-top">
                 <div>
                     <p>

@@ -147,3 +147,10 @@ function like_out(clicked){
 function img_upload(clicked, img){
     document.getElementById(clicked.id).src = "items/" + img;
 }
+function igenNem(e){
+    var chk=document.getElementById(e.id).parentElement.lastElementChild;
+    if(chk.innerHTML == "Igen")
+        chk.innerHTML="Nem";
+    else
+        chk.innerHTML="Igen";  
+}

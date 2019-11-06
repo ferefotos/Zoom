@@ -20,7 +20,7 @@ $sql = "SELECT file, class, nev, pkep, userid FROM foto
         LIMIT 30";
 if ($eredmeny = mysqli_query($dbconn, $sql)) {
     while ($sor = mysqli_fetch_assoc($eredmeny)) {
-        $nev = mb_substr($sor['nev'], mb_strpos($sor['nev'], " "));
+        $nev = mb_substr($sor['nev'], mb_strpos($sor['nev'], " ")+1);
         $file= $sor['file'];
         $img_id = strtok($sor['file'], "."); //Egyedi azonosító a fájl nevéből
       //Like és kedvenc lekérdezések

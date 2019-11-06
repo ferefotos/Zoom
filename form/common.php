@@ -17,6 +17,16 @@ function tisztit($text){
     global $dbconn;
     return mysqli_real_escape_string($dbconn, stripslashes(strip_tags(trim($text))));
 }
+// Felhasználó összes képének törlése regisztráció törlésekor
+function delAllPhotosOfUser($userid){
+    global $dbconn;
+    $sql = "SELECT file FROM foto WHERE artist='$userid'";
+        $eredmeny = mysqli_query($dbconn, $sql);    
+        while($files = mysqli_fetch_row($eredmeny)){
+            @unlink("../photos/thumbs/" . $files[0]);
+            @unlink("../photos/" . $files[0]);
+        }
+}
 
 // megszámolja a lájkokat
 function db_like($file){

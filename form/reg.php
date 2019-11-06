@@ -166,38 +166,36 @@ if (isset($_POST['reset'])) {
 
 //Regisztráció törlése
 if (isset($_POST['delete']) && !isset($_POST['reset'])) {
-    $sql = "SELECT jelszo FROM user WHERE userid='{$_SESSION['userid']}'";
-    $eredmeny = mysqli_query($dbconn, $sql);
-    $adatok = mysqli_fetch_assoc($eredmeny);
-    if($adatok['jelszo'] != sha1($_POST['jelszo_regi'])){
-        $hibalista = "A jelszavad nem egyezik!";
-    }else{
-        // A hibákhoz írja ki a figyelmeztetést, és a megerősítést
-        $hibalista = "<p>Minden adatod és fotóid törlődnek!<br>
-                      Biztos ezt akarod?
-                      <label id=\"del\"><input type=\"checkbox\" name=\"confirm\" id=\"confirm\"> Igen!</label></p>\n";
-    }
-    if (isset($_POST['confirm'])) {
-        if($_SESSION['pkep'] != "avatar.png"){
-            unlink("../users/" . $_SESSION['pkep']);
+    if(!$_POST['admin']){ //Ha admin joga van, nem tudja magát törölni, előbb meg kell azt szüntetni.
+        $sql = "SELECT jelszo FROM user WHERE userid='{$_SESSION['userid']}'";
+        $eredmeny = mysqli_query($dbconn, $sql);
+        $adatok = mysqli_fetch_assoc($eredmeny);
+        if($adatok['jelszo'] != sha1($_POST['jelszo_regi'])){
+            $hibalista = "A jelszavad nem egyezik!";
+        }else{
+            // A hibákhoz írja ki a figyelmeztetést, és a megerősítést
+            $hibalista = "<p>Minden adatod és fotóid törlődnek!<br>
+                        Biztos ezt akarod?
+                        <label id=\"del\"><input type=\"checkbox\" name=\"confirm\" id=\"confirm\"> Igen!</label></p>\n";
         }
-        // A userhez tartozó fotók lekérdezése, mert azokat is törölni kell    
-        $sql = "SELECT file FROM foto WHERE artist='{$_SESSION['userid']}'";
-        $eredmeny = mysqli_query($dbconn, $sql);    
-        while($files = mysqli_fetch_row($eredmeny)){
-            unlink("../photos/thumbs/" . $files[0]);
-            unlink("../photos/" . $files[0]);
+        if (isset($_POST['confirm'])) {
+            if($_SESSION['pkep'] != "avatar.png"){
+                unlink("../users/" . $_SESSION['pkep']);
+            }
+            // A userhez tartozó fotók lekérdezése, mert azokat is törölni kell   
+            delAllPhotosOfUser($_SESSION['userid']); 
+
+            $sql = "DELETE FROM user WHERE userid='{$_SESSION['userid']}'";
+            if (mysqli_query($dbconn, $sql)) {
+                $_SESSION = array();
+                session_destroy();
+                $confirm = "conf";
+            } else {
+                $hiba = "MySqli hiba (" . mysqli_errno($dbconn) . "): " . mysqli_error($dbconn) . "\n";
+                $hibalista = "<ul>\n<li>{$hiba}</li>\n</ul>\n";
+            }
         }
-        $sql = "DELETE FROM user WHERE userid='{$_SESSION['userid']}'";
-        if (mysqli_query($dbconn, $sql)) {
-            $_SESSION = array();
-            session_destroy();
-            $confirm = "conf";
-        } else {
-            $hiba = "MySqli hiba (" . mysqli_errno($dbconn) . "): " . mysqli_error($dbconn) . "\n";
-            $hibalista = "<ul>\n<li>{$hiba}</li>\n</ul>\n";
-        }
-    }
+    }else $hibalista ="<ul>\n<li>A törlés nem hajtható végre!</li>\n</ul>\n";
 }
 mysqli_close($dbconn);
 

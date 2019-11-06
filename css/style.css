@@ -1031,7 +1031,7 @@ summary:focus::-webkit-details-marker {color: #0077ff;}
     width: 63%; 
     margin-bottom: 0;
 }
-#public_mod{margin-bottom: 10px;}
+#public_mod{margin: 20px 5px;}
 #desc_mod{
     display:-webkit-box;
     display:-webkit-flex;
@@ -1098,6 +1098,9 @@ textarea{
     padding: 5px;
     font-size: 1.0em;
     margin-top: 5px;
+}
+input[type=checkbox]{
+    margin: 0 5px;
 }
 .hibak{
     font-size: 0.8em;

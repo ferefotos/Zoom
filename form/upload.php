@@ -16,9 +16,9 @@ if (isset($_POST['feltolt'])) {
     $obi = tisztit($_POST['obi']);
     $datum = $_POST['datum'];
     if (isset($_POST['public']))
-        $public = 0;
-    else 
         $public = 1;
+    else 
+        $public = 0;
     
     // kép oldalarány szerinti osztálybesorolása a formázáshoz
     $class = getClass("../photos/" . $_POST['file']);

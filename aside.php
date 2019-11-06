@@ -1,8 +1,7 @@
 <?php
-$sql="SELECT * FROM kategoria
-      LEFT JOIN foto ON foto.katid=kategoria.id
-      WHERE katid IS NOT NULL
-      GROUP BY katid ORDER BY kategoria";
+$sql="SELECT id, kategoria FROM kategoria
+      JOIN foto ON foto.katid=kategoria.id
+      GROUP BY id ORDER BY kategoria";
 $eredmeny=mysqli_query($dbconn, $sql);
 $kategoriak="<li><a href=\"gallery.php?toplist=\">TOP 60 fotó</a></li>\n";
 while($kategoria = mysqli_fetch_assoc($eredmeny)){

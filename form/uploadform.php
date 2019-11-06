@@ -42,7 +42,7 @@ if (isset($_FILES['foto'])){
                             </label>
                             <input type="hidden" name="file" id="file" value="<?php echo $photo?>">
                             <?php if ($class == "landscape" || $class == "wide"): ?>
-                            <label><input type="checkbox" name="public" id="public"> Nem publikus</label>
+                            <label>Publikus? <input type="checkbox" name="public" id="public" onclick="igenNem(this)" checked><span>Igen</span></label>
                             <?php endif ?>
                         </div>
                     </div>
@@ -64,7 +64,7 @@ if (isset($_FILES['foto'])){
                                 <textarea name="leiras" id="leiras" cols="24" rows="8" maxlength="500" placeholder="Itt írhatsz a kép készítéséről. Maximum 500 karakter!"></textarea>
                         </div>
                         <?php if ($class == "portrait" || $class == "square"): ?>
-                        <label><input type="checkbox" name="public" id="public"> Nem publikus</label>
+                        <label>Publikus? <input type="checkbox" name="public" id="public" onclick="igenNem(this)" checked><span>Igen</span></label>
                         <?php endif ?>
                     </div>
                 </div>
@@ -81,7 +81,7 @@ if (isset($_FILES['foto'])){
                                 <p><label for="iso">ISO:</label><br>
                                     <input type="number" name="iso" id="iso" title="ISO érték" min="25" max="9999995" step="5" value="<?php echo $exifdatas['iso']?>"></p>
                                 <p><label for="fokusz">Fókusz (mm):</label><br>
-                                    <input type="number" name="fokusz" id="fokusz" title="Fókusztávolság" max="5000" value="<?php echo $exifdatas['focus']?>"></p>
+                                    <input type="number" name="fokusz" id="fokusz" title="Fókusztávolság" min=1 max="5000" value="<?php echo $exifdatas['focus']?>"></p>
                             </div>
                         </div>
                         <div class="foto-exif" id="cam-exif">
